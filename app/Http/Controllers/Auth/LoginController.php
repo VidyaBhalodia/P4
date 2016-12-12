@@ -4,6 +4,8 @@ namespace P4\Http\Controllers\Auth;
 
 use P4\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Session;
 
 class LoginController extends Controller
 {

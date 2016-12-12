@@ -3,6 +3,7 @@
 namespace P4\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class HospitalController extends Controller
 {
