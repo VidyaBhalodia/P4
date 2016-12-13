@@ -26,7 +26,7 @@ class UserCredentialController extends Controller
 		return view('homepage')->with('message', $message);
 		}
 
-	public function CredentialList($userid) {
+	public function userCredentialList($userid) {
 		$message = "List of ".$userid."'s Hospitals";
 
 		# Match userid to database

@@ -67,7 +67,7 @@ Route::get('/', 'UserCredentialController@index')->name('credential.index');
 /* Route::get('/example', 'UserCredentialController@example')->name('credential.example');
 
 /* Show all credentials for hospital */
-Route::get('/user-credentials/{userid}', 'UserCredentialController@showCredentialList')->name('userCredential.showCredentialList');
+Route::get('/user-credentials/{userid}', 'UserCredentialController@userCredentialList')->name('userCredential.showCredentialList');
 
 /*Adding new hospital to credential list*/
 Route::get('/user-credentials/{userid}/add', 'UserCredentialController@addNewCredentialForm')->name('credential.addNewCredentialForm');
