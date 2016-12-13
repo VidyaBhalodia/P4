@@ -24,7 +24,7 @@
 };
 
 /* Debugger */
-/* Route::get('/debug', function() {
+	Route::get('/debug', function() {
 
     echo '<pre>';
 
@@ -45,7 +45,7 @@
     */
     //print_r(config('database.connections.mysql'));
 
- /*   echo '<h1>Test Database Connection</h1>';
+    echo '<h1>Test Database Connection</h1>';
     try {
         $results = DB::select('SHOW DATABASES;');
         echo '<strong style="background-color:green; padding:5px;">Connection confirmed</strong>';
@@ -64,8 +64,10 @@
 /* Homepage */
 Route::get('/', 'UserCredentialController@index')->name('credential.index');
 
+/* Route::get('/example', 'UserCredentialController@example')->name('credential.example');
+
 /* Show all credentials for hospital */
-Route::get('/user-credentials/{userid}', 'UserCredentialController@userCredentialList')->name('userCredential.showCredentialList');
+Route::get('/user-credentials/{userid}', 'UserCredentialController@showCredentialList')->name('userCredential.showCredentialList');
 
 /*Adding new hospital to credential list*/
 Route::get('/user-credentials/{userid}/add', 'UserCredentialController@addNewCredentialForm')->name('credential.addNewCredentialForm');

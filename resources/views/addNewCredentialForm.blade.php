@@ -15,8 +15,36 @@
     </header>
 
     <section>
-        <h1>This Page Contains {{ $message }}</h1>
+        <h1>Add New Hospital to Your List </h1>
+		
+		
+		@if(count($errors) > 0)
+			<ul>
+			@foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+			@endforeach
+			</ul>
+		@endif
+		
+		<form method="post" action="{{ $userpath }}">
+			{{ csrf_field() }}
+			Hospital Name : <input type='text' name='hospitalName'><br>
+			Status : <select name="status">
+				<option value=""></option>
+				<option value="Active">Active</option>
+				<option value="Pending">Pending</option>
+				<option value="Expired">Expired</option>
+				<option value="NotCredentialed">Not Credentialed</option>
+			</select><br>
+			Expiration Date : <input type="date" name="expirationDate"><br>
+			Follow-Up Date : <input type="date" name="followupDate" 	><br>
+
+			<input type='submit' value='Submit'>   <input type="reset">
+		</form>
+				
+
     </section>
+
 
     <footer>
         &copy; {{ date('Y') }}
