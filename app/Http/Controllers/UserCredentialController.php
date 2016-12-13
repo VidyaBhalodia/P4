@@ -78,7 +78,7 @@ class UserCredentialController extends Controller
 			
 			#only enter those fields if they're dates - if they're empty, leave them alone
 			if ($expirationDate != "") {$credential->expiration_date = $expirationDate;}
-			if ($followupDate != "") {$credential->followup_date = $followup_date;}
+			if ($followupDate != "") {$credential->followup_date = $followupDate;}
 			
 			# Invoke the Eloquent save() method
 			# This will generate a new row in the `books` table, with the above data
