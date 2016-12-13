@@ -93,9 +93,7 @@ class UserCredentialController extends Controller
 			$message = 'This Hospital Already Exists in Your List';
 			return view('showCredentialList')->with('message', $message);
 		}
-	
-
-		}
+	}
 		
 	public function editUserCredentialForm($userid) {
 		$message = "edit ".$userid." status";
@@ -104,7 +102,7 @@ class UserCredentialController extends Controller
 		
 	public function updateCredentialStatus($userid, Request $request) {
 		$hospitalName = $request->input('hospitalName');
-		return 'Process editing '.$userid.' status at : '.$hospitalName;		
+			return view('showCredentialList')->with('message', $message);
 		}
 	
 	public function deleteUserCredential($userid) {
