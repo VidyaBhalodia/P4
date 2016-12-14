@@ -95,10 +95,10 @@ Route::get('/user-credentials/delete', 'UserCredentialController@deleteUserCrede
 Route::delete('/user-credentials/', 'UserCredentialController@deleteUserCredential')->name('credential.deleteUserCredential');
 
 /* show list of all hospital*/
-Route::get('/hospitals', 'HospitalController@hospitalIndex')->name('credential.hospitalIndex');
+Route::get('/hospitals', 'HospitalController@showHospitalList')->name('credential.showHospitalList');
 
 /* show requirements for specific hospital*/
-Route::get('/hospitals/view/{hospital}', 'HospitalController@hospitalRequirement')->name('credential.hospitalRequirement');
+Route::get('/hospitals/{hospital}', 'HospitalController@hospitalRequirement')->name('credential.hospitalRequirement');
 
 
 /* add new hospital to master list */
@@ -114,11 +114,6 @@ Route::put('/hospitals', 'HospitalController@editHospital')->name('credential.ed
 */
 
 Auth::routes();
-Route::get('/home', 'HomeController@index');
-Route::get('/logout','Auth\LoginController@logout')->name('logout');
-
-Auth::routes();
-
 Route::get('/home', 'HomeController@index');
 Route::get('/logout','Auth\LoginController@logout')->name('logout');
 

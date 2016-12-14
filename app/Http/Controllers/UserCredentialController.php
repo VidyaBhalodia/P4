@@ -27,11 +27,13 @@ class UserCredentialController extends Controller
 		}
 
 	public function userCredentialList() {
-		$userid = Auth::user()->name;
+	    $user = Auth::user();
+	    if($user) {
+		$userid = $user->name;
 		$message = "List of ".$userid."'s Hospitals";
 
 		# Match userid to database
-		$credentials = Credential::where('user_name', 'LIKE', $userid)->get();
+		$credentials = Credential::where('user_name', '=', $userid)->get();
 
 		# Make sure we have results before trying to print them...
 		if(!$credentials->isEmpty()) {
@@ -44,17 +46,29 @@ class UserCredentialController extends Controller
 			echo 'No Hospitals in Your List';
 		}
 		
-		return view('showCredentialList')->with('message', $message);
+		return view('showCredentialList')->with('message', $message);}
+		else {
+			return view('home')->with('message', "Please Login");
+			}
 		}
 
 	public function addNewCredentialForm() {
-		$userid = Auth::user()->name;
-		$message = "add to ".$userid." credential list";
-		return view('addNewCredentialForm');	
+	    $user = Auth::user();
+	    if($user) {
+			$userid = $user->name;
+			$message = "add to ".$userid." credential list";
+			return view('addNewCredentialForm');	
+			}
+		else {
+			return view('home')->with('message', "Please Login");
+			}
+		
 		}
 
 	public function addNewCredential(Request $request) {
-		$userid = Auth::user()->name;
+    $user = Auth::user();
+    if($user) {
+		$userid = $user->name;
 		$this->validate($request, ['hospitalName' => 'required','status' => 'required',]);
 		$hospitalName = $request->input('hospitalName');
 		$status = $request->input('status');
@@ -96,22 +110,32 @@ class UserCredentialController extends Controller
 				}			
 			$message =  'Process adding new hospital to '.$userid.' credential list : '.$hospitalName;
 			}
-			
 		else {
 			$message = 'This Hospital Already Exists in Your List';
 			}
-
 		return view('showCredentialList')->with('message', $message);	
+		}
+	else {
+		return view('home')->with('message', "Please Login");
+		}
 	}
 		
 	public function editUserCredentialForm() {
-		$userid = Auth::user()->name;
+    $user = Auth::user();
+    if($user) {
+		$userid = $user->name;
 		$message = "edit ".$userid."'s credential list";
 		return view('editUserCredentialForm');	
 		}
+	else {
+		return view('home')->with('message', "Please Login");
+		}
+	}
 		
 	public function editUserCredential(Request $request) {
-		$userid = Auth::user()->name;
+    $user = Auth::user();
+    if($user) {
+		$userid = $user->name;
 		$this->validate($request, ['hospitalName' => 'required','status' => 'required',]);
 		$hospitalName = $request->input('hospitalName');
 		$status = $request->input('status');
@@ -130,7 +154,7 @@ class UserCredentialController extends Controller
 			if ($followupDate != "") {$credential->followup_date = $followupDate;}
 			
 			# Invoke the Eloquent save() method
-			# This will generate a new row in the `books` table, with the above data
+			# This will generate a new row in the `credentials` table, with the above data
 			$credential->save();
 
 			echo 'Updated: '.$credential->facility_name.'<br>';
@@ -149,23 +173,33 @@ class UserCredentialController extends Controller
 				}			
 			$message =  'Editting hospital in '.$userid.' credential list : '.$hospitalName;
 			}
-			
+	
 		else {
 			$message = 'This Hospital Is not Part of Your List';
 			}
-
 		return view('showCredentialList')->with('message', $message);
 		}
+	else {
+		return view('home')->with('message', "Please Login");
+		}
+	}
 
 	public function deleteUserCredentialForm() {
-		$userid = Auth::user()->name;
+    $user = Auth::user();
+    if($user) {
+		$userid = $user->name;
 		$message = "delete hospital from ".$userid."'s credential list";
 		return view('deleteUserCredentialForm')->with('message', $message);;	
 		}
+	else {
+		return view('home')->with('message', "Please Login");
+		}
+	}
 
-		
 	public function deleteUserCredential(Request $request) {
-		$userid = Auth::user()->name;
+    $user = Auth::user();
+    if($user) {
+		$userid = $user->name;
 		$hospitalName = $request->input('hospitalName');
 		$credential = Credential::where('user_name', '=', $userid)->where('facility_name', '=', $hospitalName)->first();
 		if($credential) {
@@ -188,9 +222,11 @@ class UserCredentialController extends Controller
 			else {
 				echo 'No Hospitals in Your List';
 				}			
-				
-	
 			$message =  'Editting hospital in '.$userid.' credential list : '.$hospitalName;
 		return view('showCredentialList')->with('message', $message);
 		}
+	else {
+		return view('home')->with('message', "Please Login");
+		}
 	}
+}

@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/user-credentials';
 
     /**
      * Create a new controller instance.
@@ -38,4 +38,13 @@ class LoginController extends Controller
     {
         $this->middleware('guest', ['except' => 'logout']);
     }
+	
+	public function logout(Request $request)
+	{
+    $this->guard()->logout();
+    $request->session()->flush();
+    $request->session()->regenerate();
+    Session::flash('flash_message','You have been logged out.'); # <-- NEW
+    return redirect('/');
+	}
 }
