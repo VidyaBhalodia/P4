@@ -15,7 +15,6 @@
     </header>
 
     <section>
-        <h1>This Page Contains {{ $message }}</h1>
 	@if(count($errors) > 0)
 		<ul>
 			@foreach ($errors->all() as $error)
@@ -23,6 +22,9 @@
 			@endforeach
 		</ul>
 	@endif
+
+    <h1>This Page Contains {{ $message }}</h1>
+
     </section>
 
     <footer>

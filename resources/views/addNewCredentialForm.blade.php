@@ -26,7 +26,7 @@
 			</ul>
 		@endif
 		
-		<form method="post" action="{{ $userpath }}">
+		<form method="post" action="/user-credentials">
 			{{ csrf_field() }}
 			Hospital Name : <input type='text' name='hospitalName'><br>
 			Status : <select name="status">

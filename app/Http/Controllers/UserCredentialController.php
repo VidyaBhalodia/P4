@@ -9,8 +9,9 @@ use P4\Credential; # <--- NEW
 
 class UserCredentialController extends Controller
 {
-    public function example() {
-        # Use the QueryBuilder to get all the books
+
+/*    public function example() {
+        # Use the QueryBuilder to get all the credentials
         $credentials = DB::table('credentials')->get();
 
         # Output the results
@@ -20,12 +21,13 @@ class UserCredentialController extends Controller
     }
 
     /** Home Page     */
-    public function index() {
+    public function home() {
         $message = 'Home Page';
-		return view('homepage')->with('message', $message);
+		return view('home')->with('message', $message);
 		}
 
-	public function userCredentialList($userid) {
+	public function userCredentialList() {
+		$userid = Auth::user()->name;
 		$message = "List of ".$userid."'s Hospitals";
 
 		# Match userid to database
@@ -45,13 +47,14 @@ class UserCredentialController extends Controller
 		return view('showCredentialList')->with('message', $message);
 		}
 
-	public function addNewCredentialForm($userid) {
+	public function addNewCredentialForm() {
+		$userid = Auth::user()->name;
 		$message = "add to ".$userid." credential list";
-		$userpath = "/user-credentials/".$userid;
-		return view('addNewCredentialForm')->with('userpath', $userpath);	
+		return view('addNewCredentialForm');	
 		}
 
-	public function addNewCredential($userid, Request $request) {
+	public function addNewCredential(Request $request) {
+		$userid = Auth::user()->name;
 		$this->validate($request, ['hospitalName' => 'required','status' => 'required',]);
 		$hospitalName = $request->input('hospitalName');
 		$status = $request->input('status');
@@ -101,12 +104,14 @@ class UserCredentialController extends Controller
 		return view('showCredentialList')->with('message', $message);	
 	}
 		
-	public function editUserCredentialForm($userid) {
-		$userpath = "/user-credentials/".$userid;
-		return view('editUserCredentialForm')->with('userpath', $userpath);	
+	public function editUserCredentialForm() {
+		$userid = Auth::user()->name;
+		$message = "edit ".$userid."'s credential list";
+		return view('editUserCredentialForm');	
 		}
 		
-	public function editUserCredential($userid, Request $request) {
+	public function editUserCredential(Request $request) {
+		$userid = Auth::user()->name;
 		$this->validate($request, ['hospitalName' => 'required','status' => 'required',]);
 		$hospitalName = $request->input('hospitalName');
 		$status = $request->input('status');
@@ -152,13 +157,15 @@ class UserCredentialController extends Controller
 		return view('showCredentialList')->with('message', $message);
 		}
 
-	public function deleteUserCredentialForm($userid) {
-		$userpath = "/user-credentials/".$userid;
-		return view('deleteUserCredentialForm')->with('userpath', $userpath);	
+	public function deleteUserCredentialForm() {
+		$userid = Auth::user()->name;
+		$message = "delete hospital from ".$userid."'s credential list";
+		return view('deleteUserCredentialForm')->with('message', $message);;	
 		}
 
 		
-	public function deleteUserCredential($userid, Request $request) {
+	public function deleteUserCredential(Request $request) {
+		$userid = Auth::user()->name;
 		$hospitalName = $request->input('hospitalName');
 		$credential = Credential::where('user_name', '=', $userid)->where('facility_name', '=', $hospitalName)->first();
 		if($credential) {
