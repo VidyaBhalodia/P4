@@ -78,7 +78,8 @@ Route::get('/user-credentials/{userid}/edit', 'UserCredentialController@editUser
 Route::put('/user-credentials/{userid}', 'UserCredentialController@editUserCredential')->name('credential.editUserCredential');
 
 /* Remove hospital from credential list */
-Route::delete('/user-credentials/{userid}/delete', 'UserCredentialController@deleteUserCredential')->name('credential.deleteUserCredential');
+Route::get('/user-credentials/{userid}/delete', 'UserCredentialController@deleteUserCredentialForm')->name('credential.deleteUserCredentialForm');
+Route::delete('/user-credentials/{userid}', 'UserCredentialController@deleteUserCredential')->name('credential.deleteUserCredential');
 
 
 /* show list of all hospital*/

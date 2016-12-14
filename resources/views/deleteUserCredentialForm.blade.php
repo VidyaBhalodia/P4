@@ -25,19 +25,9 @@
 		@endif
 		
 		<form method="post" action="{{ $userpath }}">
-		    {{ method_field('PUT') }}
+		    {{ method_field('DELETE') }}
 			{{ csrf_field() }}
 			Hospital Name : <input type='text' name='hospitalName'><br>
-			Status : <select name="status">
-				<option value=""></option>
-				<option value="Active">Active</option>
-				<option value="Pending">Pending</option>
-				<option value="Expired">Expired</option>
-				<option value="NotCredentialed">Not Credentialed</option>
-			</select><br>
-			Expiration Date : <input type="date" name="expirationDate"><br>
-			Follow-Up Date : <input type="date" name="followupDate" 	><br>
-
 			<input type='submit' value='Submit'>   <input type="reset">
 		</form>
 
