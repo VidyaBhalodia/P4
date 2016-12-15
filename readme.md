@@ -11,7 +11,7 @@ Server-side validation is performed to ensure that the required hospital and sta
 
 Planning Document : https://docs.google.com/document/d/14BY_FD1WclgkjiTpII3SXU7q1uclCmEi83IJb5GCxnA/edit?usp=sharing
 
-Demo : 
+Demo : http://youtu.be/QGdZEMUzceE?hd=1
 
 Details for teaching team :
 
