@@ -5,7 +5,9 @@ namespace P4\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use DB; 
-use P4\Credential; # <--- NEW
+use P4\Credential; 
+use \Session;
+
 
 class UserCredentialController extends Controller
 {
@@ -22,15 +24,15 @@ class UserCredentialController extends Controller
 
     /** Home Page     */
     public function home() {
-        $message = 'Home Page';
-		return view('home')->with('message', $message);
+        $title = 'Home Page';
+		return view('home')->with('title', $title);
 		}
 
 	public function userCredentialList() {
 	    $user = Auth::user();
 	    if($user) {
 		$userid = $user->name;
-		$message = "List of ".$userid."'s Hospitals";
+		$title = "List of ".$userid."'s Hospitals";
 
 		# Match userid to database
 		$credentials = Credential::where('user_name', '=', $userid)->get();
@@ -38,17 +40,17 @@ class UserCredentialController extends Controller
 		# Make sure we have results before trying to print them...
 		if(!$credentials->isEmpty()) {
 			# Output the credentials
-			foreach($credentials as $credential) {
-				echo $credential->facility_name.'<br>';
-			}
+			return view('showCredentialList')->with('title', $title)->with('credentials', $credentials);
 		}
 		else {
-			echo 'No Hospitals in Your List';
+			Session::flash('flash_message','No Hospitals Found');
+			return redirect('/home');
 		}
 		
 		return view('showCredentialList')->with('message', $message);}
 		else {
-			return view('home')->with('message', "Please Login");
+			Session::flash('flash_message','Please Login');
+			return redirect('/home');
 			}
 		}
 
@@ -56,11 +58,12 @@ class UserCredentialController extends Controller
 	    $user = Auth::user();
 	    if($user) {
 			$userid = $user->name;
-			$message = "add to ".$userid." credential list";
-			return view('addNewCredentialForm');	
+			$title = "Add to ".$userid."'s Credential List";
+			return view('addNewCredentialForm')->with('title', $title);	
 			}
 		else {
-			return view('home')->with('message', "Please Login");
+			Session::flash('flash_message','Please login');
+			return redirect('/login');
 			}
 		
 		}
@@ -94,29 +97,28 @@ class UserCredentialController extends Controller
 			# Invoke the Eloquent save() method
 			# This will generate a new row in the `books` table, with the above data
 			$credential->save();
+			$title = "List of ".$userid."'s Hospitals";
 
-			echo 'Added: '.$credential->facility_name.'<br>';
 
 			# Make sure we have results before trying to print them...
 			$credentialList = Credential::where('user_name', 'LIKE', $userid)->get();
 			if(!$credentialList->isEmpty()) {
-				# Output the credentials
-				foreach($credentialList as $credential) {
-					echo $credential->facility_name.'<br>';
-					}
+				Session::flash('flash_message',$hospitalName.' Added to '.$userid."'s List");
+				return view('showCredentialList')->with('title', $title)->with('credentials', $credentialList);
 				}
 			else {
-				echo 'No Hospitals in Your List';
+				Session::flash('flash_message','No Hospitals Found');
+				return redirect('/hospitals');
 				}			
-			$message =  'Process adding new hospital to '.$userid.' credential list : '.$hospitalName;
 			}
 		else {
-			$message = 'This Hospital Already Exists in Your List';
+			Session::flash('flash_message','Hospital Already Exists in User List');
+			return redirect('/user-credentials');
 			}
-		return view('showCredentialList')->with('message', $message);	
 		}
 	else {
-		return view('home')->with('message', "Please Login");
+		Session::flash('flash_message','Please Login');
+		return redirect('/home');
 		}
 	}
 		
@@ -124,11 +126,12 @@ class UserCredentialController extends Controller
     $user = Auth::user();
     if($user) {
 		$userid = $user->name;
-		$message = "edit ".$userid."'s credential list";
-		return view('editUserCredentialForm');	
+		$title = "Edit ".$userid."'s Credential List";
+		return view('editUserCredentialForm')->with('title', $title);	
 		}
 	else {
-		return view('home')->with('message', "Please Login");
+		Session::flash('flash_message','Please login');
+		return redirect('/login');
 		}
 	}
 		
@@ -156,31 +159,28 @@ class UserCredentialController extends Controller
 			# Invoke the Eloquent save() method
 			# This will generate a new row in the `credentials` table, with the above data
 			$credential->save();
-
-			echo 'Updated: '.$credential->facility_name.'<br>';
+			$title = "List of ".$userid."'s Hospitals";
 
 			# Show list of all hospitals
 			$credentialList = Credential::where('user_name', 'LIKE', $userid)->get();
 			# Make sure we have results before trying to print them...
 			if(!$credentialList->isEmpty()) {
-				# Output the credentials
-				foreach($credentialList as $credential) {
-					echo $credential->facility_name.'<br>';
-					}
+				Session::flash('flash_message',$hospitalName.' Status Editted');
+				return view('showCredentialList')->with('title', $title)->with('credentials', $credentialList);
 				}
 			else {
-				echo 'No Hospitals in Your List';
+				Session::flash('flash_message','No Hospitals Found');
+				return redirect('/hospitals');
 				}			
-			$message =  'Editting hospital in '.$userid.' credential list : '.$hospitalName;
 			}
-	
 		else {
-			$message = 'This Hospital Is not Part of Your List';
+			Session::flash('flash_message','Hospital Already Exists in User List');
+			return redirect('/user-credentials');
 			}
-		return view('showCredentialList')->with('message', $message);
 		}
 	else {
-		return view('home')->with('message', "Please Login");
+		Session::flash('flash_message','Please Login');
+		return redirect('/home');
 		}
 	}
 
@@ -188,11 +188,12 @@ class UserCredentialController extends Controller
     $user = Auth::user();
     if($user) {
 		$userid = $user->name;
-		$message = "delete hospital from ".$userid."'s credential list";
-		return view('deleteUserCredentialForm')->with('message', $message);;	
+		$title = "Delete Hospital From ".$userid."'s Credential List";
+		return view('deleteUserCredentialForm')->with('title', $title);	
 		}
 	else {
-		return view('home')->with('message', "Please Login");
+		Session::flash('flash_message','Please login');
+		return redirect('/login');
 		}
 	}
 
@@ -204,29 +205,28 @@ class UserCredentialController extends Controller
 		$credential = Credential::where('user_name', '=', $userid)->where('facility_name', '=', $hospitalName)->first();
 		if($credential) {
 			$credential->delete();
-			echo $hospitalName." Deleted <br>";
 			}
 		else {
-			echo "Can't delete - Hospital not found <br>";
+			Session::flash('flash_message','Hospital Not Found');
+			return redirect('/user-credentials');
 			}
-		$message = "remove ".$userid." status";
+			$title = "List of ".$userid."'s Hospitals";
+
 			# Show list of all hospitals
 			$credentialList = Credential::where('user_name', 'LIKE', $userid)->get();
 			# Make sure we have results before trying to print them...
 			if(!$credentialList->isEmpty()) {
-				# Output the credentials
-				foreach($credentialList as $credential) {
-					echo $credential->facility_name.'<br>';
-					}
+				Session::flash('flash_message',$hospitalName.' Removed');
+				return view('showCredentialList')->with('title', $title)->with('credentials', $credentialList);
 				}
 			else {
-				echo 'No Hospitals in Your List';
+				Session::flash('flash_message','No Hospitals Found');
+				return redirect('/user-credentials');
 				}			
-			$message =  'Editting hospital in '.$userid.' credential list : '.$hospitalName;
-		return view('showCredentialList')->with('message', $message);
-		}
+			}
 	else {
-		return view('home')->with('message', "Please Login");
+		Session::flash('flash_message','Please Login');
+		return redirect('/home');
 		}
 	}
 }

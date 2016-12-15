@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Hospital</title>
-    <meta charset='utf-8'>
-</head>
-<body>
+@extends('layouts.master')
 
-    <header>
-        <img
-        src='http://making-the-internet.s3.amazonaws.com/laravel-foobooks-logo@2x.png'
-        style='width:300px'
-        alt='Foobooks Logo'>
-    </header>
+@section('title')
+    {{$title}}
+@stop
 
-
+@section('content')
 	
     <section>
 		<h2> test </h2>
