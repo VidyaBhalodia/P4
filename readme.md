@@ -1,27 +1,19 @@
-# Laravel PHP Framework
+Description
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+This is my credential generator. The goal is to allow clinicians to view hospitals requirements for credentialing and track the hospitals at which they are (or are interested in being) credentialed). Clinicians can register and login to view all hospital requirements,  view their current hospitals, track and change their status, as well as add and remove hospitals from their list. For privacy reasons, no information can be viewed without logging in. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+Validation : 
+Users are required to login before viewing or adding / changing any information, and they are restricted to only viewing information on their account. 
+Users can only add hospitals from the master hospital list. 
+Users can only edit and delete hospitals from their selected list.
+Client-side validation includes verifying format for dates.
+Server-side validation is performed to ensure that the required hospital and status information is entered when adding and updating fields. 
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+Planning Document : https://docs.google.com/document/d/14BY_FD1WclgkjiTpII3SXU7q1uclCmEi83IJb5GCxnA/edit?usp=sharing
 
-## Official Documentation
+Demo : http://youtu.be/QGdZEMUzceE?hd=1
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+Details for teaching team :
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Authorization and Login / Logout information was created from the scripts provided through laravel.
+Layout and formatting based off http://www.w3schools.com/css/css_navbar.asp tutorial
