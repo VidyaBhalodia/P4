@@ -1,17 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.master')
+
+@section('title')
+    Home Page
+@stop
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+	<h1> Welcome to the Credentialing Manager </h1>
+	
+	<p> Here you can manage the credential requirements and status for your hospitals. </p>
+	<p> If you are a new user, click <a href = "/register"> here </a> to register </p>
+	<p> If you are an existing user, click <a href = "/login"> here </a> to login and keep your credential information up to date</p>
 
-                <div class="panel-body">
-					Welcome
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

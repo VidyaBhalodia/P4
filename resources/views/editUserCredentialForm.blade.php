@@ -10,7 +10,12 @@
 		<form method="post" action="/user-credentials">
 		    {{ method_field('PUT') }}
 			{{ csrf_field() }}
-			Hospital Name : <input type='text' name='hospitalName'><br>
+			Hospital Name : <select name ="hospitalName"> 
+				<option value =""></option>
+				@foreach($hospitalList as $hospital)
+					<option value='{{$hospital->facility_name}}'>{{$hospital->facility_name}}</option>
+				@endforeach
+			</select><br>
 			Status : <select name="status">
 				<option value=""></option>
 				<option value="Active">Active</option>

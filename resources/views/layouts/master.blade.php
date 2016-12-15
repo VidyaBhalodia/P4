@@ -5,8 +5,9 @@
     <meta charset='utf-8'>
 </head>
 
+<h1 align = center> Credential Manager </h1>
 <ul>
-  <li><a href="/home">Home</a></li>
+  <li><a href="/">Home</a></li>
   <li><a href="/login">Login</a></li>
   <li><a href="/hospitals">View All Hospitals</a></li>
   <li><a href="/user-credentials">View My Hospitals</a></li>

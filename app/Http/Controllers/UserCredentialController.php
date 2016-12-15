@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use DB; 
 use P4\Credential; 
+use P4\Hospital; 
 use \Session;
 
 
@@ -43,8 +44,8 @@ class UserCredentialController extends Controller
 			return view('showCredentialList')->with('title', $title)->with('credentials', $credentials);
 		}
 		else {
-			Session::flash('flash_message','No Hospitals Found');
-			return redirect('/home');
+			Session::flash('flash_message','No Hospitals Found - Add one from our list');
+			return redirect('/hospitals');
 		}
 		
 		return view('showCredentialList')->with('message', $message);}
@@ -56,10 +57,12 @@ class UserCredentialController extends Controller
 
 	public function addNewCredentialForm() {
 	    $user = Auth::user();
+		$hospitalList = Hospital::all();
+
 	    if($user) {
 			$userid = $user->name;
 			$title = "Add to ".$userid."'s Credential List";
-			return view('addNewCredentialForm')->with('title', $title);	
+			return view('addNewCredentialForm')->with(['title' => $title, 'hospitalList' => $hospitalList]);	
 			}
 		else {
 			Session::flash('flash_message','Please login');
@@ -126,8 +129,9 @@ class UserCredentialController extends Controller
     $user = Auth::user();
     if($user) {
 		$userid = $user->name;
+		$hospitalList = Credential::where('user_name', '=', $userid)->get();
 		$title = "Edit ".$userid."'s Credential List";
-		return view('editUserCredentialForm')->with('title', $title);	
+		return view('editUserCredentialForm')->with(['title' => $title, 'hospitalList' => $hospitalList]);	
 		}
 	else {
 		Session::flash('flash_message','Please login');
@@ -147,7 +151,7 @@ class UserCredentialController extends Controller
 	
 		$credential = Credential::where('user_name', '=', $userid)->where('facility_name', '=', $hospitalName)->first();
 
-		# if that combination of userID and facilityName don't exist, then create a new one
+		# only do if that combination of userID and facilityName don't exist, then create a new one
 		if($credential) {
 			# Set the parameters
 			# Note how each parameter corresponds to a field in the table
@@ -162,7 +166,7 @@ class UserCredentialController extends Controller
 			$title = "List of ".$userid."'s Hospitals";
 
 			# Show list of all hospitals
-			$credentialList = Credential::where('user_name', 'LIKE', $userid)->get();
+			$credentialList = Credential::where('user_name', '=', $userid)->get();
 			# Make sure we have results before trying to print them...
 			if(!$credentialList->isEmpty()) {
 				Session::flash('flash_message',$hospitalName.' Status Editted');
@@ -186,10 +190,12 @@ class UserCredentialController extends Controller
 
 	public function deleteUserCredentialForm() {
     $user = Auth::user();
+
     if($user) {
 		$userid = $user->name;
+		$hospitalList = Credential::where('user_name', '=', $userid)->get();
 		$title = "Delete Hospital From ".$userid."'s Credential List";
-		return view('deleteUserCredentialForm')->with('title', $title);	
+		return view('deleteUserCredentialForm')->with(['title' => $title, 'hospitalList' => $hospitalList]);	
 		}
 	else {
 		Session::flash('flash_message','Please login');

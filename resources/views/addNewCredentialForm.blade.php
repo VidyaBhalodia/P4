@@ -6,11 +6,16 @@
 
 @section('content')
         <h1>{{$title or ""}} </h1>
-		
 		<form method="post" action="/user-credentials">
 			{{ csrf_field() }}
-			Hospital Name : <input type='text' name='hospitalName'><br>
-			Status : <select name="status">
+			Hospital Name : <select name ="hospitalName"> 
+				<option value =""></option>
+				@foreach($hospitalList as $hospital)
+					<option value='{{$hospital->facility_name}}'>{{$hospital->facility_name}}</option>
+				@endforeach
+			</select><br>
+
+				Status : <select name="status">
 				<option value=""></option>
 				<option value="Active">Active</option>
 				<option value="Pending">Pending</option>
