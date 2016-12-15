@@ -30,11 +30,6 @@
 
 	</div>
 
-</body>
-</html>
-
-
-
     <!-- Scripts -->
     <script src="/js/app.js"></script>
 </body>
