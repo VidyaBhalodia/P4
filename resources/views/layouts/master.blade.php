@@ -5,7 +5,7 @@
     <meta charset='utf-8'>
 </head>
 
-<h1 align = center> Credential Manager </h1>
+<h1> Credential Manager </h1>
 <ul>
   <li><a href="/">Home</a></li>
   <li><a href="/login">Login</a></li>
@@ -34,7 +34,6 @@
 </html>
 
 
-    </div>
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
